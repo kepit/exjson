@@ -7,7 +7,13 @@ defimpl ExJSON.Generator, for: Atom do
 end
 
 defimpl ExJSON.Generator, for: BitString do
-  def generate(thing), do: inspect(thing)
+   def generate(thing) do
+     if String.valid?(thing) do
+ 	inspect(thing)
+     else
+	Hex.encode(thing)
+     end
+   end
 end
 
 defimpl ExJSON.Generator, for: Float do
@@ -23,6 +29,10 @@ defimpl ExJSON.Generator, for: Tuple do
 
   def generate({key, value}) do
     "#{ExJSON.Generator.generate(key)}:#{ExJSON.Generator.generate(value)}"
+  end
+
+  def generate({val}) do
+    "#{ExJSON.Generator.generate(val)}"
   end
 end
 
@@ -50,3 +60,4 @@ defimpl ExJSON.Generator, for: List do
     false
   end
 end
+
