@@ -11,7 +11,7 @@ defimpl ExJSON.Generator, for: BitString do
      if String.valid?(thing) do
  	inspect(thing)
      else
-	Hex.encode(thing)
+	"#{Hex.encode(thing)}"
      end
    end
 end
